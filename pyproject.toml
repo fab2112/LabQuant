@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "LabQuant"
+version = "0.1.0"
+description = "LabQuant is a tool to support the development and evaluation of algo-strategies in quantitative finance."
+authors = ["Fabrício Siqueira"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+PyQt5 = "5.15.10"
+PyQt5-sip = "12.13.0"
+PyQt5-Qt5 = "5.15.2"
+pyqtgraph = "0.13.7"
+pandas = "2.2.2"
+numpy = "1.26.4"
+colorama = "0.4.6"
+scikit-learn = "1.4.2"
+scikit-optimize = "0.10.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+
