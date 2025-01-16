@@ -44,7 +44,7 @@ from .utils import (
 )
 
 
-BAR_TITLE = "LabQuant v0.1.0"
+BAR_TITLE = "LabQuant v0.1.2"
 
 
 class LabQuant(QtWidgets.QMainWindow):
