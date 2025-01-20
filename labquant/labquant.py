@@ -44,7 +44,7 @@ from .utils import (
 )
 
 
-BAR_TITLE = "LabQuant v0.1.2"
+BAR_TITLE = "LabQuant v0.1.4"
 
 
 class LabQuant(QtWidgets.QMainWindow):
@@ -791,26 +791,24 @@ class LabQuant(QtWidgets.QMainWindow):
 
         print(f"\n{Fore.LIGHTYELLOW_EX}INITIALIZING LabQuant...{Fore.RESET}")
 
+        # Set df_main & df_str_params
+        self.df_main = self.df_1.copy()
+        if self.str_params is not None:
+            self.df_str_params = self.str_params[0].copy()
+            
         # Plot logic
         if self.test_:
             if self.show_roi:
-                self.df_main = self.df_1.copy()
                 self.roi_plot_var = 1
                 self._update_plot_by_roi()
             else:
-                self._show_plot()
+                self._show_plot()             
         else:
             self.win_1.show()
             if self.show_roi:
-                self.df_main = self.df_1.copy()
-                if self.str_params is not None:
-                    self.df_str_params = self.str_params[0].copy()
                 self.roi_plot_var = 1
                 QtCore.QTimer.singleShot(100, self._update_plot_by_roi)
             else:
-                self.df_main = self.df_1.copy()
-                if self.str_params is not None:
-                    self.df_str_params = self.str_params[0].copy()
                 QtCore.QTimer.singleShot(100, self._show_plot)
 
         # QApplication Main loop
@@ -2384,7 +2382,7 @@ class LabQuant(QtWidgets.QMainWindow):
                 self.mc_s0 = self.df_1.c.values[0]
 
             # Set default mc_nsteps
-            if self.mc_nsteps is None:
+            if self.mc_nsteps is None or self.show_roi:
                 self.mc_nsteps = len(self.df_1) 
 
             # Clip mc_nsteps
@@ -2392,7 +2390,7 @@ class LabQuant(QtWidgets.QMainWindow):
                 self.mc_nsteps = len(self.df_1) 
                 
             # Process dataframes diffs (strategy data-in x strategy data-out)
-            self.df_diff_factor = len(self.str_params[0]) - len(self.strategy(self.str_params))
+            self.df_diff_factor = len(self.str_params[0]) - len(self.df_main)
             self.str_params[0] = self.str_params[0][: self.mc_nsteps + self.df_diff_factor]
 
             # Set shared var
@@ -2808,7 +2806,8 @@ class LabQuant(QtWidgets.QMainWindow):
                 self.mcProcess.terminate()
             del self.np_mem_1, self.np_mem_2
             # Reset atributtes
-            self.mc_nsteps = None
+            if self.show_roi:
+                self.mc_nsteps = None
             self.str_params[0] = self.df_str_params.copy()
 
     def _show_hypparams_simulation(self):

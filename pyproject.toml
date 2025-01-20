@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "LabQuant"
-version = "0.1.2"
+version = "0.1.4"
 description = "LabQuant is a tool to support the development and evaluation of algo-strategies in quantitative finance."
 authors = ["Fabrício Siqueira"]
 license = "MIT"
